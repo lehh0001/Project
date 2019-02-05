@@ -25,7 +25,7 @@ header .navbar {
 header .logo {
   float: left;
   font-size: 32px;
-  color: #f7ba3e;
+  color: #ccc;
 }
 header .nav {
   float: right;
@@ -95,7 +95,7 @@ section .family figure {
 }
 section .family a {
  display: block;
- height: 220px;
+ height: 270px;
 }
 section .family img {
   width:100%;
@@ -140,7 +140,7 @@ section .timeline .img {
   font-size: 17px;
   display: inline-block;
   text-align: center;
-  background: greenyellow;
+  background: #a0b6da;
 }
 
 
@@ -308,8 +308,8 @@ footer .intro .button {
 .footer-container li:last-child a {
 color: #d5c7de;
 }
-.iconfont {
-  font-size: 24px  !important;
+.footer-container .iconfont {
+  font-size: 24px  ;
 }
 .icon-yuanbao,
 .icon-zhu {
