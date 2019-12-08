@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./js/jquery-3.4.1.min.js"></script>
+  <link rel="stylesheet" href="./css/idnex.css">
+  <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+
+  <div class="cover"></div>
+  <div class="musicbox">
+    <div class="music-panel">
+      <div class="music">
+        <div class="control">
+          <span class="back"><i class="fa fa-step-backward"></i></span>
+          <span class="play"><i class="fa fa-pause"></i></span>
+          <span class="forward"><i class="fa fa-step-forward"></i></span>
+        </div>
+        <div class="info">
+          <div class="title"></div>
+          <div class="auther"></div>
+        </div>
+      </div>
+      <div class="progress">
+        <div class="bar">
+          <div class="progress-total"></div>
+          <div class="progress-now"></div>
+        </div>
+        <div class="time">0:00</div>
+      </div>
+    </div>
+    <ul class="list">
+      <!-- <li>枯木逢春-这一生关于你的风景</li>
+      <li>小猪-宠坏</li> -->
+    </ul>
+  </div>
+
+
+  <audio src="https://music.163.com/#/search/m/?s=%E7%8E%AB%E7%91%B0%20%E8%B4%B0%E4%BD%B0&type=1"></audio>
+
+
+  <script>
+    var MusicList = []
+    var currentIndex = 0
+    var clock
+    var audio = new Audio()
+    audio.autoplay = true
+
+    getMusicList (function (list) {
+      musicList = list
+      loadMusic(list[currentIndex])
+    })
+
+    audio.ontimeupdate = function () {
+      $('.musicbox .progress-now').style.width = (this.currentTime / this.duration) * 100 + '%'
+    }
+
+    audio.onplay = function () {
+      clock = setInterval(function () {
+        var min = Math.floor(audio.currentTime / 60)
+        var sec = Math.floor(audio.currentTime) % 60 + ''
+        sec = sec.length === 2 ? sec : '0' + sec
+        $('.musicbox .time').innerText = min + ':' + sec
+      }, 1000)
+    }
+    audio.onpause = function () {
+      clearInterval(clock)
+    }
+    audio.onended = function () {
+      console.log('ended')
+      currentIndex = (++currentIndex) % MusicList.length
+      loadMusic(MusicList[currentIndex])
+    }
+
+    $('.musicbox .play').onclick = function () {
+      if (audio.paused) {
+        audio.play()
+        this.querySelector('.fa').classList.remove('fa-pause')
+        this.querySelector('.fa').classList.add('fa-play')
+      } else {
+        audio.pause()
+        this.querySelector('.fa').classList.add('fa-play')
+        this.querySelector('.fa').classList.remove('fa-pause')
+      }
+    }
+
+// 下一曲
+    $('.musicbox .forward').onclick = function () {
+      currentIndex = (++currentIndex)%musicList.length
+      loadMusic(musicList[currentIndex])
+    }
+// 上一曲
+    $('.musicbox .back').onclick = function () {
+      currentIndex = (musicList.length + --currentIndex)%musicList.length
+      loadMusic(musicList[currentIndex])
+    }
+
+// 进度条拖拽
+   $('.musicbox .bar').onclick = function(e){
+     console.log(e)
+     var percent = e.offsetX / parseInt(getComputedStyle(this).width)
+     console.log(percent)
+     audio.currentTime = audio.duration  *  percent
+   }
+
+
+    function $(selector) {
+      return document.querySelector(selector)
+    }
+
+// 获取音乐json
+    function getMusicList(callback) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/music.json', true);
+      xhr.onload = function () {
+        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+          callback(JSON.parse(this.responseText))
+        } else {
+          console.log('获取数据失败')
+        }
+      }
+      xhr.onerror = function () {
+        console.log('网络异常')
+      }
+      xhr.send();
+    }
+
+// 获取dom并写入内容
+    function loadMusic(musicObj) {
+      console.log('begin play' , musicObj)
+      $('.musicbox .title').innerText = musicObj.title
+      $('.musicbox .auther').innerText = musicObj.auther
+      $('.cover').style.backgroundImage = 'url(' + musicObj.img + ')'
+      audio.src = musicObj.src
+    }
+
+
+  </script>
+
+
+  <script src="./js/index.js"></script>
+</body>
+
+</html>
