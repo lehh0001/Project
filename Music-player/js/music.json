@@ -1,24 +1,24 @@
  [
   {
-    "src": "./musicSrc/枯木逢春 - 这一生关于你的风景(完整版)（Cover：枯木逢春）.mp3",
+    "src": "../musicSrc/枯木逢春 - 这一生关于你的风景(完整版)（Cover：枯木逢春）.mp3",
     "img": "./musicImg/鬼刀.jpg",
     "title": "这一生关于你的风景",
     "author": "枯木逢春"
   },
   {
-    "src": "./musicSrc/小猪 - 宠坏（Cover：李俊佑）.mp3",
+    "src": "../musicSrc/小猪 - 宠坏（Cover：李俊佑）.mp3",
     "img": "./musicImg/1.jpg",
     "title": "宠坏",
     "author": "小猪"
   },
   {
-    "src": "./musicSrc/王蓝茵 - 如果的事.mp3",
+    "src": "../musicSrc/王蓝茵 - 如果的事.mp3",
     "img": "./musicImg/3.jpg",
     "title": "如果的事",
     "author": "王蓝茵"
   },
   {
-    "src": "./musicSrc/谢春花 - 借我.mp3",
+    "src": "../musicSrc/谢春花 - 借我.mp3",
     "img": "./musicImg/4.jpg",
     "title": "借我",
     "author": "谢春花"
